@@ -10,7 +10,6 @@ def ksa (key,box):
 def ksa_string(plain,key):
     encode = bytes(key, 'utf-8')
     box = []
-    initSBox(box)
     ksa(encode,box)
     keyStream = ""
     keyStream = prga(plain, box, keyStream)
