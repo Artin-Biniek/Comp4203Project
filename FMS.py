@@ -1,10 +1,7 @@
 
-def initSBox(box):
+def ksa (key,box):
     for i in range(256):
         box.append(i)
-
-
-def ksa (key,box):
     j = 0
     for i in range (256):
         j = (j + box[i] + key[i % len(key)]) % 256
