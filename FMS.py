@@ -1,4 +1,4 @@
-
+#This is the KSA
 def ksa (key,box):
     for i in range(256):
         box.append(i)
