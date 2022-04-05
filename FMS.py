@@ -24,6 +24,7 @@ def prga(plain,box,keyStream):
         j = (j + box[i]) % 256
         swap(box,i,j)
         keyStream += chr(box[(box[i] + box[j]) % 256])
+        output=plain[i-1]^keyStream
     return keyStream
     
 def swap(box,a,b):
