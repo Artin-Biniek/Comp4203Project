@@ -1,10 +1,4 @@
 
-
-<<<<<<< Updated upstream
-#This is a new comment
-=======
-#Hello WOrld
->>>>>>> Stashed changes
 def ksa (key,box):
     for i in range(256):
         box.append(i)
