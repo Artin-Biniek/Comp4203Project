@@ -1,17 +1,18 @@
 from RC4 import *
-
+from FMS import *
 key = "temp"
 plaintext = "test"
 test = rc4Encrypt(plaintext,key)
 print(test)
-print(rc4Decrypt(test,key))
+
 
 #Testing FMS.py function
-keySteam=""
+keyStream=""
 output=""
-box=""
+
 plain="Test message"
 
+keyStream=ksa_string(key,plain)
 
-ksa(key,plain)
-print(prga(plain, box, keyStream, output))
+print(keyStream)
+prga(plain,keyStream)
