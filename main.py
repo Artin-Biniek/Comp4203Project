@@ -12,7 +12,7 @@ output=""
 
 plain="Test message"
 
-keyStream=ksa_string(key,plain)
+# keyStream=ksa_string(key,plain)
 
 print(keyStream)
-prga(plain,keyStream)
+# print(prga(plain,keyStream))
