@@ -5,7 +5,7 @@ box=[]
 
 
 
-def something (key,box):
+def something (key,box,A):
     for i in range(256):
         box.append(i)
     j = 0
@@ -20,7 +20,7 @@ def something (key,box):
                 box[i],box[j] = box[j], box[i]
             else:
                 #Not sure how to add A+3 here
-                j= j-int(key[(ord('A')+3)%len(key)])
+                j= j-int(key[(A+3)%len(key)])
 
 
 def ksa (key,box):
@@ -94,15 +94,15 @@ def Output (plain):
             values.append([str(iv[0]),str(iv[1]),str(iv[2]),str(cipherByte)])
     return values
     
-def temp2(values):
+def RecoverKey(values):
     iv = [0] * 3
     keyLength = int(values[-1][0]) - 2
     for A in range(keyLength):
         prob = [0]*256
         for i in range(len(values)):
             iv[0] = values[i][0]
-    #         iv[1] = values[i][1]
-    #         iv[2] = values[i][2]
+            iv[1] = values[i][1]
+            iv[2] = values[i][2]
         
         
     
@@ -115,4 +115,4 @@ if (v == 0):
     print(v)
     print("Value Not A Hex")
 else:
-    temp2(v)
+    RecoverKey(v)
