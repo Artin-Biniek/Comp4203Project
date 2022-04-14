@@ -6,6 +6,7 @@ box=[]
 
 
 def something (key,box,A):
+    #print("IN SOMETHING")
     for i in range(256):
         box.append(i)
     j = 0
@@ -13,14 +14,14 @@ def something (key,box,A):
         #if J is less then 2 or if dealing with a non int in the key then skip
         #isinstance(int(key[i%len(key)]),int))
        # print(key[i%len(key)].isdigit())
-        if( key[i%len(key)].isdigit() ):
+        #if( key[i%len(key)].isdigit() ):
             #print( j + box[i] + int(key[i % len(key)]) )
-            if((j + box[i] + int(key[i % len(key)]))>2 ):
-                j = (j + box[i] + int(key[i % len(key)])) % 256
-                box[i],box[j] = box[j], box[i]
-            else:
+        if((j + box[i] + int(key[i % len(key)]))>2 ):
+           j = (j + box[i] + int(key[i % len(key)])) % 256
+           box[i],box[j] = box[j], box[i]
+        else:
                 #Not sure how to add A+3 here
-                j= j-int(key[(A+3)%len(key)])
+            j= j-int(key[A%len(key)])
 
 
 def ksa (key,box):
@@ -81,7 +82,7 @@ def Output (plain):
             sessionKey = iv + key
             # print(str(sessionKey))
             box = []
-            #non ints were detected in the session key
+            
             ksa(sessionKey,box)
 
             i = 1 % 256
@@ -92,7 +93,7 @@ def Output (plain):
 
             cipherByte = (int("aa", 16)) ^ keyStreamByte
             values.append([str(iv[0]),str(iv[1]),str(iv[2]),str(cipherByte)])
-    return values
+    return values,sessionKey
     
 def RecoverKey(values):
     iv = [0] * 3
@@ -110,7 +111,8 @@ def RecoverKey(values):
 
 
  
-v = Output("F23456")
+v,sessionKey = Output("F23456")
+print(sessionKey)
 if (v == 0):
     print(v)
     print("Value Not A Hex")
