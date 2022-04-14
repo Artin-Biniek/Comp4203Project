@@ -5,7 +5,8 @@ box=[]
 
 
 
-def something (key,box):
+def something (key,box,A):
+    #print("IN SOMETHING")
     for i in range(256):
         box.append(i)
     j = 0
@@ -13,14 +14,14 @@ def something (key,box):
         #if J is less then 2 or if dealing with a non int in the key then skip
         #isinstance(int(key[i%len(key)]),int))
        # print(key[i%len(key)].isdigit())
-        if( key[i%len(key)].isdigit() ):
+        #if( key[i%len(key)].isdigit() ):
             #print( j + box[i] + int(key[i % len(key)]) )
-            if((j + box[i] + int(key[i % len(key)]))>2 ):
-                j = (j + box[i] + int(key[i % len(key)])) % 256
-                box[i],box[j] = box[j], box[i]
-            else:
+        if((j + box[i] + int(key[i % len(key)]))>2 ):
+           j = (j + box[i] + int(key[i % len(key)])) % 256
+           box[i],box[j] = box[j], box[i]
+        else:
                 #Not sure how to add A+3 here
-                j= j-int(key[(ord('A')+3)%len(key)])
+            j= j-int(key[A%len(key)])
 
 
 def ksa (key,box):
@@ -81,7 +82,7 @@ def Output (plain):
             sessionKey = iv + key
             # print(str(sessionKey))
             box = []
-            #non ints were detected in the session key
+            
             ksa(sessionKey,box)
 
             i = 1 % 256
@@ -92,9 +93,10 @@ def Output (plain):
 
             cipherByte = (int("aa", 16)) ^ keyStreamByte
             values.append([str(iv[0]),str(iv[1]),str(iv[2]),str(cipherByte)])
-    return values
+    return values,sessionKey
     
-def temp2(values):
+def temp2(values,sessionKey):
+    #print("IN TEMP 2")
     iv = [0] * 3
     keyLength = int(values[-1][0]) - 2
     for A in range(keyLength):
@@ -103,16 +105,18 @@ def temp2(values):
             iv[0] = values[i][0]
     #         iv[1] = values[i][1]
     #         iv[2] = values[i][2]
-        
+      
+            something(sessionKey,box,iv[0])
         
     
 
 
 
  
-v = Output("F23456")
+v,sessionKey = Output("F23456")
+print(sessionKey)
 if (v == 0):
     print(v)
     print("Value Not A Hex")
 else:
-    temp2(v)
+    temp2(v,sessionKey)
