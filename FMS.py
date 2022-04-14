@@ -5,7 +5,7 @@ box=[]
 
 
 
-def ksa (key,box):
+def something (key,box):
     for i in range(256):
         box.append(i)
     j = 0
@@ -22,6 +22,14 @@ def ksa (key,box):
                 #Not sure how to add A+3 here
                 j= j-int(key[(ord('A')+3)%len(key)])
 
+
+def ksa (key,box):
+    for i in range(256):
+        box.append(i)
+    j = 0
+    for i in range (256):
+        j = (j + box[i] + key[i % len(key)]) % 256
+        box[i],box[j] = box[j], box[i]
 
 # #This function encrypts the plaintext and makes it into a byte    
 # def ksa_string(plain,key):
@@ -71,9 +79,10 @@ def Output (plain):
         for k in range(256):
             iv[2] = k
             sessionKey = iv + key
+            # print(str(sessionKey))
             box = []
             #non ints were detected in the session key
-            ksa(str(sessionKey),box)
+            ksa(sessionKey,box)
 
             i = 1 % 256
             j = (box[i]) % 256
@@ -88,25 +97,22 @@ def Output (plain):
 def temp2(values):
     iv = [0] * 3
     keyLength = int(values[-1][0]) - 2
-    print(len(values))
     for A in range(keyLength):
         prob = [0]*256
-        for i in len(values):
+        for i in range(len(values)):
             iv[0] = values[i][0]
-            iv[1] = values[i][1]
-            iv[2] = values[i][2]
+    #         iv[1] = values[i][1]
+    #         iv[2] = values[i][2]
         
         
     
 
 
 
-key = "000000"
-#plaintext = "test"
-ksa(key,box)
  
 v = Output("F23456")
 if (v == 0):
+    print(v)
     print("Value Not A Hex")
 else:
     temp2(v)
